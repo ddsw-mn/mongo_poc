@@ -1,10 +1,16 @@
-class User {
+const mongoose = require('mongoose');
 
-  constructor({ first_name, last_name, username, mail }) {
-    this.first_name = first_name;
-    this.last_name = last_name;
-    this.username = username;
-    this.mail = mail;
+const UserModel = mongoose.model('User', new mongoose.Schema({
+  first_name: { type: String, required: true },
+  last_name: { type: String, required: true },
+  username: { type: String, required: true, unique: true },
+  mail: { type: String, required: true },
+}));
+
+class User extends UserModel {
+
+  constructor(user) {
+    super(user)
   }
 
 }
