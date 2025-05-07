@@ -1,0 +1,19 @@
+{
+  "name": "mongo_poc",
+  "version": "0.0.1",
+  "description": "Mongo POC",
+  "main": "backend/src/index.js",
+  "scripts": {
+    "start": "node backend/src/index.js",
+    "test": "jest backend/tests"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.1.0"
+  }
+}
