@@ -1,37 +1,40 @@
+const { connect } = require('../clients/mongo.client');
+
 class UserRepository {
-  constructor() {
-    this.users = [];
+
+  #COLLECTION_NAME = 'users';
+
+  async users() {
+    const db = await connect();
+    return db.collection(this.#COLLECTION_NAME);
   }
 
-  create(user) {
-    this.users.push(user);
+  async create(user) {
+    const usersCollection = await this.users();
+    return await usersCollection.insertOne(user);
   }
 
-  list() {
-    return this.users;
+  async list() {
+    const usersCollection = await this.users();
+    return await usersCollection.find({}).toArray();
   }
 
-  retrieve(username) {
-    return this.users.find(user => user.username === username);
+  async retrieve(username) {
+    const usersCollection = await this.users();
+    return await usersCollection.findOne({ username: username });
   }
 
-  update(toUpdate) {
-    const index = this.users.findIndex(user => user.username === toUpdate.username);
-
-    if (index !== -1) {
-      this.users[index] = toUpdate;
-      return this.users[index];
-    }
-    return null;
+  async update({ username, ...updateData }) {
+    const usersCollection = await this.users();
+    return await usersCollection.updateOne(
+      { username: username },
+      { $set: updateData }
+    );
   }
 
-  delete(username) {
-    const index = this.users.findIndex(user => user.username === username);
-
-    if (index !== -1) {
-      return this.users.splice(index, 1)[0];
-    }
-    return null;
+  async delete(username) {
+    const usersCollection = await this.users();
+    return await usersCollection.deleteOne({ username: username });
   }
 }
 
