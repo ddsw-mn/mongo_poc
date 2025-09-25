@@ -1,18 +1,12 @@
 const mongoose = require('mongoose');
 
-const UserModel = mongoose.model('User', new mongoose.Schema({
+userSchema = new mongoose.Schema({
   first_name: { type: String, required: true },
   last_name: { type: String, required: true },
   username: { type: String, required: true, unique: true },
   mail: { type: String, required: true },
-}));
+});
 
-class User extends UserModel {
 
-  constructor(user) {
-    super(user)
-  }
-
-}
-
+const User = mongoose.model('User', userSchema);
 module.exports = User;
